@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: idea-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: idea-frontend
+  template:
+    metadata:
+      labels:
+        app: idea-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: your-registry/idea-frontend:latest
+          ports:
+            - containerPort: 3000
+
+

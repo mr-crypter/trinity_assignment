@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: idea-backend
+spec:
+  selector:
+    app: idea-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4000
+  type: ClusterIP
+
+

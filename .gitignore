@@ -1,0 +1,31 @@
+# Node
+backend/node_modules    
+frontend/node_modules
+
+# Env
+.env
+**/.env
+.env.*
+!.env.example
+
+# Build outputs
+.next/
+dist/
+out/
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+*.pid
+
+# Editors
+.vscode/
+.idea/
+
+# Ignore the example sandbox
+frontend/_examples_my-app/
