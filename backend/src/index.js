@@ -39,6 +39,10 @@ const pool = new Pool({
   connectionTimeoutMillis: 5_000,
   ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : false,
   family: 4,
+  // Force IPv4 resolution for hosts that prefer AAAA
+  lookup: (hostname, options, callback) => {
+    return dns.lookup(hostname, { family: 4, hints: dns.ADDRCONFIG }, callback);
+  },
 });
 
 // Helpers
