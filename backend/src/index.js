@@ -1,4 +1,7 @@
 'use strict';
+const dns = require('dns');
+// Prefer IPv4 to avoid ENETUNREACH on hosts that resolve AAAA first
+try { dns.setDefaultResultOrder('ipv4first'); } catch (_) {}
 
 const express = require('express');
 const { Pool } = require('pg');
