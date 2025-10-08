@@ -86,3 +86,23 @@ See `k8s/` folder for example manifests. Adjust image names, secrets, and domain
 kubectl apply -f k8s/
 ```
 
+## Deployment
+
+### Backend on Render
+1. Push this repo to GitHub.
+2. In Render, create a Database and a Web Service from this repo.
+3. Use the provided `render.yaml` or set:
+   - Build Command: `npm ci --omit=dev`
+   - Start Command: `node scripts/migrate.js && node src/index.js`
+4. Environment Variables:
+   - `DATABASE_URL` (from Render Postgres)
+   - `DATABASE_SSL=true`
+   - `NODE_ENV=production`
+
+### Frontend on Vercel
+1. Import the `frontend/` directory in Vercel (monorepo config).
+2. Framework preset: Next.js. Build Command: `next build`. Output: `.next`.
+3. Environment Variable:
+   - `NEXT_PUBLIC_API_URL` → your Render backend URL + `/api` (e.g., `https://idea-backend.onrender.com/api`)
+4. Redeploy.
+
