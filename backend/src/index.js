@@ -71,6 +71,8 @@ app.post('/api/ideas', async (req, res) => {
     );
     return res.status(201).json(buildSuccess(rows[0]));
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[POST /api/ideas] error', err);
     return res.status(500).json(buildError('Internal server error'));
   }
 });
@@ -90,6 +92,8 @@ app.get('/api/ideas', async (req, res) => {
     const { rows } = await pool.query(sql, [limit, offset]);
     return res.status(200).json(buildSuccess(rows));
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[GET /api/ideas] error', err);
     return res.status(500).json(buildError('Internal server error'));
   }
 });
@@ -110,6 +114,8 @@ app.post('/api/ideas/:id/upvote', async (req, res) => {
     }
     return res.status(200).json(buildSuccess(rows[0]));
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[POST /api/ideas/:id/upvote] error', err);
     return res.status(500).json(buildError('Internal server error'));
   }
 });
@@ -135,6 +141,14 @@ function shutdown(signal) {
 
 process.on('SIGTERM', () => shutdown('SIGTERM'));
 process.on('SIGINT', () => shutdown('SIGINT'));
+
+// Fallback error handler
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  // eslint-disable-next-line no-console
+  console.error('[unhandled error]', err);
+  res.status(500).json(buildError('Internal server error'));
+});
 
 
 
