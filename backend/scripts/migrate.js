@@ -30,16 +30,8 @@ async function run() {
 
     await waitForDb();
 
-    // In container, __dirname is /usr/src/app/scripts.
-    // docker-compose mounts ./migrations -> /usr/src/app/migrations.
-    // So the correct relative path is ../migrations. Keep a fallback one level up just in case.
-    let migrationsDir = resolve(__dirname, '../migrations');
-    try {
-      // verify directory exists by attempting to read it
-      readdirSync(migrationsDir);
-    } catch (_) {
-      migrationsDir = resolve(__dirname, '../../migrations');
-    }
+    // Always read from backend-local migrations folder
+    const migrationsDir = resolve(__dirname, '../migrations');
     const files = readdirSync(migrationsDir)
       .filter((f) => f.endsWith('.sql'))
       .sort();
